@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - InstructorAvatar_L_Shoulder
+  - UserAvatar_L_Shoulder
+  - InstructorAvatar_R_Shoulder
+  - UserAvatar_R_Shoulder
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - HiddenMesh
+  - Water
+  - UI
+  - Hands
+  - Interactive
+  - 
+  - 
+  - Character
+  - MirroredCharacter
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
