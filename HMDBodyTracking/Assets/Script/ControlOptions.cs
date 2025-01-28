@@ -12,6 +12,10 @@ public class ControlOptions : MonoBehaviour
     private Animator animator;
 	public GameObject UserAvatar; 
 	
+	public GameObject userAvatarOld;
+	
+	public int Forwarded = 0;
+	
     private bool isPaused = false;
 	GameObject presser;
 	AudioSource sound;
@@ -23,6 +27,18 @@ public class ControlOptions : MonoBehaviour
 	public TextMeshProUGUI TimeFrame;
 	public GameObject PauseText; 
 	public GameObject ResumeText; 
+	
+	
+	public MonoBehaviour script3; // Toggleable
+    public MonoBehaviour script4; // Toggleable
+    public MonoBehaviour script5; // Toggleable
+    public MonoBehaviour script6; // Toggleable
+    public MonoBehaviour script7; // Toggleable
+	
+	private float clickCooldown = 1f;  // Time to prevent multiple clicks (0.2 seconds)
+    private float lastClickTime = 0f;
+	
+	// private int currentMode = 0;
 	
 
 	
@@ -100,6 +116,7 @@ public class ControlOptions : MonoBehaviour
 		PauseText.SetActive(false);
 		
 		CurrentAnimationSpeed = animator.speed;
+		
 
     }
 
@@ -141,9 +158,11 @@ public class ControlOptions : MonoBehaviour
     // Method to move the animation forward by 5 seconds
     public void PlayForward()
     {
-		sound.Play();
-        if (IsInstructorAvatarEnabled() && animator != null)
+		
+        if (IsInstructorAvatarEnabled() && animator != null && (Time.time - lastClickTime > clickCooldown))
         {
+			sound.Play();
+			lastClickTime = Time.time;
             // Get the current animation time
             animationTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
@@ -155,6 +174,8 @@ public class ControlOptions : MonoBehaviour
             // Update the animator's time
             animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, animationTime);
 			
+			Forwarded += 1;
+			
         }
         else
         {
@@ -165,9 +186,11 @@ public class ControlOptions : MonoBehaviour
     // Method to move the animation backward by 5 seconds
     public void PlayBackward()
     {
-		sound.Play();
-        if (IsInstructorAvatarEnabled() && animator != null)
+		
+        if (IsInstructorAvatarEnabled() && animator != null && (Time.time - lastClickTime > clickCooldown))
         {
+			sound.Play();
+			lastClickTime = Time.time;
             // Get the current animation time
             animationTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
@@ -180,6 +203,8 @@ public class ControlOptions : MonoBehaviour
 
             // Update the animator's time
             animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, animationTime);
+			
+			Forwarded -= 1;
         }
         else
         {
@@ -237,5 +262,51 @@ public class ControlOptions : MonoBehaviour
 		UserAvatar.transform.rotation = Quaternion.Euler(UserAvatarRotation.x, UserAvatarRotation.y + 180, UserAvatarRotation.z);
 		UserAvatar.transform.localScale = new Vector3(-UserAvatar.transform.localScale.x, UserAvatar.transform.localScale.y, UserAvatar.transform.localScale.z);
 	}
+	
+	
+	// public void SwitchingHighlight()
+	// {	
+		// sound.Play();
+		
+		// script3.enabled = false;
+		// script4.enabled = false;
+		// script5.enabled = false;
+		// script6.enabled = false;
+		// script7.enabled = false;
+
+        // Vector3 position = UserAvatar.transform.position;
+        // Quaternion rotation = UserAvatar.transform.rotation;
+
+        // Destroy(UserAvatar);
+
+        // UserAvatar = Instantiate(userAvatarOld, position, rotation);
+		
+		// UserAvatar.SetActive(false);
+		// UserAvatar.SetActive(true);
+		
+		
+		// currentMode = (currentMode + 1) % 5; // Cycles through 0, 1, 2 (Mode1, Mode2, Mode3)
+		
+		 // switch (currentMode)
+        // {
+            // case 0:
+                // script7.enabled = true;
+                // break;
+            // case 1:
+                // script3.enabled = true;
+                // break;
+            // case 2:
+                // script4.enabled = true;
+                // break;
+            // case 3:
+                // script5.enabled = true;
+                // break;
+            // case 4:
+                // script6.enabled = true;
+                // break;
+			
+        // }
+		
+	// }
 	
 }

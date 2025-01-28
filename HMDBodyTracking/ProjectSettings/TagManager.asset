@@ -8,6 +8,8 @@ TagManager:
   - UserAvatar_L_Shoulder
   - InstructorAvatar_R_Shoulder
   - UserAvatar_R_Shoulder
+  - LeftHandTrigger
+  - RightHandTrigger
   layers:
   - Default
   - TransparentFX
