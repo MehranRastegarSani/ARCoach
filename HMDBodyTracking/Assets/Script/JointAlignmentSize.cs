@@ -26,17 +26,18 @@ public class JointAlignmentSize : MonoBehaviour
     public float maxWristDistance = 2f; // Max possible distance for wrist misalignment
 
 
-    void Start() 
-    { 
-        Left_Elbow_Sphere.SetActive(true);
-        Right_Elbow_Sphere.SetActive(true);
-        Left_Wrist_Sphere.SetActive(true);
-        Right_Wrist_Sphere.SetActive(true);
-
-    }
-
     void Update()
     {
+		
+		if(!Left_Elbow_Sphere.activeSelf)
+		{
+			Left_Elbow_Sphere.SetActive(true);
+			Right_Elbow_Sphere.SetActive(true);
+			Left_Wrist_Sphere.SetActive(true);
+			Right_Wrist_Sphere.SetActive(true);
+		}
+		
+		
         if (transform.localScale.x > 0)
         {
             // Left Arm Alignment (only elbow and wrist)
@@ -111,4 +112,14 @@ public class JointAlignmentSize : MonoBehaviour
 
         return combinedAlignment; // Return value between 0 (misaligned) and 1 (perfectly aligned)
     }
+	
+	public void Destroying()
+	{
+		
+		Left_Elbow_Sphere.SetActive(false);
+        Right_Elbow_Sphere.SetActive(false);
+		Left_Wrist_Sphere.SetActive(false);
+        Right_Wrist_Sphere.SetActive(false);
+		
+	}
 }

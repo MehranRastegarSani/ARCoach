@@ -16,8 +16,19 @@ public class ArmAlignmentColor : MonoBehaviour
 
     // Transparency control value (0 = fully transparent, 1 = fully opaque)
     [Range(0, 1)] public float maxTransparency = 0.5f; 
+	
+	private SkinnedMeshRenderer originalLeftArmRenderer;
+	private SkinnedMeshRenderer originalRightArmRenderer;
+	
 
-void Update()
+    void Start()
+    {
+		originalLeftArmRenderer = UserAvatar_Left_ArmRenderer;
+		originalRightArmRenderer = UserAvatar_Right_ArmRenderer;
+
+    }	
+
+	void Update()
     {
         // Based on the scale, compare arms accordingly
         float leftArmAlignment, rightArmAlignment;
@@ -125,4 +136,55 @@ void Update()
             Debug.LogError("Material on " + armRenderer.name + " doesn't have a MainTex property!");
         }
     }
+	
+	
+	// public void Destroying()
+	// {
+		// Debug.LogWarning("Hi");
+		// UserAvatar_Left_ArmRenderer = originalLeftArmRenderer;
+		// UserAvatar_Right_ArmRenderer = originalRightArmRenderer;
+	// }
+	
+	
+	
+	public void Destroying()
+{
+    Debug.LogWarning("Destroying the color effect...");
+
+    // Reset the material properties to the original state
+    ResetArmMaterialProperties(UserAvatar_Left_ArmRenderer);
+    ResetArmMaterialProperties(UserAvatar_Right_ArmRenderer);
+
+    // Reset the SkinnedMeshRenderer references (if needed)
+    UserAvatar_Left_ArmRenderer = originalLeftArmRenderer;
+    UserAvatar_Right_ArmRenderer = originalRightArmRenderer;
+
+    // Any other necessary reset logic goes here
+}
+
+// Reset the material properties to their original state
+	void ResetArmMaterialProperties(SkinnedMeshRenderer armRenderer)
+	{
+		Material material = armRenderer.material;
+
+		if (material.HasProperty("_MainTex"))
+		{
+			// Reset to default opaque mode
+			material.SetFloat("_Mode", 0);  // Set to Opaque mode (0 = Opaque, 3 = Transparent)
+			material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+			material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+			material.SetInt("_ZWrite", 1);  // Enable writing to depth buffer
+			material.EnableKeyword("_ALPHATEST_ON");
+			material.DisableKeyword("_ALPHABLEND_ON");
+			material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+			material.renderQueue = -1;  // Default render queue for opaque materials
+
+			// Restore the original color (if you saved it earlier)
+			material.SetColor("_Color", Color.white);  // Or the original color if you had one saved
+		}
+		else
+		{
+			Debug.LogError("Material on " + armRenderer.name + " doesn't have a MainTex property!");
+		}
+	}
 }

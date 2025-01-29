@@ -27,22 +27,25 @@ public class JointAlignmentColor : MonoBehaviour
 	private Renderer Right_Elbow_Marker;
 	private Renderer Left_Wrist_Marker;
 	private Renderer Right_Wrist_Marker;
+	
+	public Color OrginalColor;
 
-	void Start() 
-	{ 
-        Left_Elbow_Sphere.SetActive(true);
-        Right_Elbow_Sphere.SetActive(true);
-		Left_Wrist_Sphere.SetActive(true);
-        Right_Wrist_Sphere.SetActive(true);
-		
-		Left_Elbow_Marker = Left_Elbow_Sphere.GetComponent<MeshRenderer>();
-		Right_Elbow_Marker = Right_Elbow_Sphere.GetComponent<MeshRenderer>();
-		Left_Wrist_Marker = Left_Wrist_Sphere.GetComponent<MeshRenderer>();
-		Right_Wrist_Marker = Right_Wrist_Sphere.GetComponent<MeshRenderer>();
-	}
 
     void Update()
     {
+		
+		if(!Left_Elbow_Sphere.activeSelf)
+		{
+			Left_Elbow_Sphere.SetActive(true);
+			Right_Elbow_Sphere.SetActive(true);
+			Left_Wrist_Sphere.SetActive(true);
+			Right_Wrist_Sphere.SetActive(true);
+			
+			Left_Elbow_Marker = Left_Elbow_Sphere.GetComponent<MeshRenderer>();
+			Right_Elbow_Marker = Right_Elbow_Sphere.GetComponent<MeshRenderer>();
+			Left_Wrist_Marker = Left_Wrist_Sphere.GetComponent<MeshRenderer>();
+			Right_Wrist_Marker = Right_Wrist_Sphere.GetComponent<MeshRenderer>();
+		}
 		
 		if (transform.localScale.x > 0)
         {
@@ -115,7 +118,23 @@ public class JointAlignmentColor : MonoBehaviour
 
         return combinedAlignment; // Return value between 0 (misaligned) and 1 (perfectly aligned)
     }
+	
+	
+	public void Destroying()
+	{
+
+		Left_Elbow_Marker.material.color = OrginalColor;
+		Right_Elbow_Marker.material.color = OrginalColor;
+		Left_Wrist_Marker.material.color = OrginalColor;
+		Right_Wrist_Marker.material.color = OrginalColor;
+		
+		
+		Left_Elbow_Sphere.SetActive(false);
+        Right_Elbow_Sphere.SetActive(false);
+		Left_Wrist_Sphere.SetActive(false);
+        Right_Wrist_Sphere.SetActive(false);
+		
+	}
 
 
-  
 }

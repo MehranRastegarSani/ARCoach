@@ -19,15 +19,15 @@ public class ArmAlignmentOutline : MonoBehaviour
     [Range(0, 1)] public float outlineTransparency = 0.5f;  // Transparency control value (0 = fully transparent, 1 = fully opaque)
 
 
-	void Start() 
-	{ 
-        LeftArmOutline.enabled = true;
-        RightArmOutline.enabled = true;
-	}
-	
-	
 	void Update()
     {
+		
+		if (!LeftArmOutline.enabled)
+		{
+			LeftArmOutline.enabled = true;
+			RightArmOutline.enabled = true;
+		}
+		
         // Based on the scale, compare arms accordingly
         float leftArmAlignment, rightArmAlignment;
 
@@ -137,4 +137,10 @@ public class ArmAlignmentOutline : MonoBehaviour
             Debug.LogError("Material on " + armRenderer.name + " doesn't have a MainTex property!");
         }
     }
+	
+	public void Destroying()
+	{
+		LeftArmOutline.enabled = false;
+        RightArmOutline.enabled = false;
+	}
 }

@@ -29,16 +29,16 @@ public class ControlOptions : MonoBehaviour
 	public GameObject ResumeText; 
 	
 	
-	public MonoBehaviour script3; // Toggleable
-    public MonoBehaviour script4; // Toggleable
-    public MonoBehaviour script5; // Toggleable
-    public MonoBehaviour script6; // Toggleable
-    public MonoBehaviour script7; // Toggleable
+	public ArmAlignmentColor script3; // Toggleable
+    public ArmAlignmentOutline script4; // Toggleable
+    public JointAlignmentColor script5; // Toggleable
+    public JointAlignmentSize script6; // Toggleable
+    public JointAlignmentBrightness script7; // Toggleable
 	
 	private float clickCooldown = 1f;  // Time to prevent multiple clicks (0.2 seconds)
     private float lastClickTime = 0f;
 	
-	// private int currentMode = 0;
+	private int currentMode = 0;
 	
 
 	
@@ -264,49 +264,47 @@ public class ControlOptions : MonoBehaviour
 	}
 	
 	
-	// public void SwitchingHighlight()
-	// {	
-		// sound.Play();
+	public void SwitchingHighlight()
+	{	
+		sound.Play();
 		
-		// script3.enabled = false;
-		// script4.enabled = false;
-		// script5.enabled = false;
-		// script6.enabled = false;
-		// script7.enabled = false;
+		script3.enabled = false;
+		script4.enabled = false;
+		script5.enabled = false;
+		script6.enabled = false;
+		script7.enabled = false;
+		
+		// script3.Destroying();
 
-        // Vector3 position = UserAvatar.transform.position;
-        // Quaternion rotation = UserAvatar.transform.rotation;
-
-        // Destroy(UserAvatar);
-
-        // UserAvatar = Instantiate(userAvatarOld, position, rotation);
-		
-		// UserAvatar.SetActive(false);
-		// UserAvatar.SetActive(true);
+		script4.Destroying();
+		script6.Destroying();
+		script7.Destroying();
 		
 		
-		// currentMode = (currentMode + 1) % 5; // Cycles through 0, 1, 2 (Mode1, Mode2, Mode3)
+		currentMode = (currentMode + 1) % 6; // Cycles through 0, 1, 2 (Mode1, Mode2, Mode3)
+		switch (currentMode)
+        {
+            case 0:
+                break;
+            case 1:
+                script3.enabled = true;
+                break;
+            case 2:
+                script4.enabled = true;
+				script3.Destroying();
+                break;
+            case 3:
+                script5.enabled = true;
+                break;
+			case 4:
+                script6.enabled = true;
+				script5.Destroying();
+                break;		
+			case 5:
+                script7.enabled = true;
+                break;					
+        }
 		
-		 // switch (currentMode)
-        // {
-            // case 0:
-                // script7.enabled = true;
-                // break;
-            // case 1:
-                // script3.enabled = true;
-                // break;
-            // case 2:
-                // script4.enabled = true;
-                // break;
-            // case 3:
-                // script5.enabled = true;
-                // break;
-            // case 4:
-                // script6.enabled = true;
-                // break;
-			
-        // }
-		
-	// }
+	}
 	
 }
